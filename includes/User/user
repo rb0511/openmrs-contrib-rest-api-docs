@@ -1,0 +1,225 @@
+<h1 id='user'>User</h1><h2 id='user-overview'>User Overview</h2>
+<p>A User in OpenMRS is an account that a person may use to log into the system.</p>
+
+<p>The real-life person is represented by a Person record in OpenMRS, and a person may have more than one user account. If you want a patient to be able to view her own record in OpenMRS, then you need to create a user account and link it to the patient&#39;s person record.</p>
+<h2 id='available-operations-for-user'>Available operations for User</h2>
+<ol>
+<li><a href="#list-user">List users</a></li>
+<li><a href="#create-a-user">Create a user</a></li>
+<li><a href="#update-a-user">Update a user</a></li>
+<li><a href="#delete-a-user">Delete a user</a></li>
+</ol>
+<h2 id='list-user'>List user</h2>
+<ul>
+<li>### List all non-retired users.</li>
+</ul>
+
+<p>Quickly filter users with given query parameters. Returns a <code>404 Not Found</code> status if the user does not exist.
+  If not logged in to perform this action,a <code>401 Unauthorized</code> status is returned.</p>
+
+<p>### Query Parameters</p>
+
+<p>| Parameter | Type           | Description                           |
+  | --------- | -------------- | ------------------------------------- |
+  | <em>q</em>       | <code>Search Query</code> | Filter users by username or system ID |</p>
+<pre class="highlight shell_session"><code>GET /user?
+q=user1
+</code></pre>
+<ul>
+<li>### Get user by UUID.</li>
+</ul>
+
+<p>Retrieve a user by its UUID. Returns a <code>404 Not Found</code> status if the user does not exist. If not logged in to perform this action, a <code>401 Unauthorized</code> status is returned.</p>
+<pre class="highlight shell_session"><code>GET /user/:target_user_uuid
+</code></pre><h2 id='create-a-user'>Create a user</h2>
+<ul>
+<li><p>For convenience, the person&#39;s information can be included in order to create the corresponding person record at the same time as their user record. When creating a user record for an existing person, then the existing person need only be referenced by UUID. If you are not logged in to perform this action,
+a <code>401 Unauthorized</code> status is returned.</p>
+
+<p>### Attributes</p>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><em>name</em></td>
+<td><code>String</code></td>
+<td>Name of the user</td>
+</tr>
+<tr>
+<td><em>description</em></td>
+<td>`String</td>
+<td>Description of the user</td>
+</tr>
+<tr>
+<td><em>username</em></td>
+<td>`String</td>
+<td>username of the user</td>
+</tr>
+<tr>
+<td><em>password</em></td>
+<td>`String</td>
+<td>password of the user</td>
+</tr>
+<tr>
+<td><em>person</em></td>
+<td><code>String</code></td>
+<td>person resource associated with the user</td>
+</tr>
+<tr>
+<td><em>systemId</em></td>
+<td><code>String</code></td>
+<td>a unique identifier assigned to each user</td>
+</tr>
+<tr>
+<td><em>roles</em></td>
+<td><code>Array[] : role</code></td>
+<td>a list of roles attributed to the user</td>
+</tr>
+<tr>
+<td><em>userProperties</em></td>
+<td><code>JSON Object</code></td>
+<td>A set of key value pairs. Used to store user specific data</td>
+</tr>
+<tr>
+<td><em>secretQuestion</em></td>
+<td><code>String</code></td>
+<td>A secret question chosen by the user</td>
+</tr>
+</tbody></table></li>
+</ul>
+<pre class="highlight shell_session"><code>POST /user
+{
+  "name": "Mohit Kumar",
+  "description": "A GSoD participant."
+  "username": "batbrain7"
+  "password": "******"
+  "person" :
+        {
+        "names": [
+            {
+                "givenName": "Mohit",
+                "familyName": "Kumar"
+            }
+        ],
+        "gender": "M",
+        "birthdate": "1997-09-02",
+        "addresses": [
+        {
+         "address1": "30, Vivekananda Layout, Munnekolal,Marathahalli",
+        "cityVillage": "Bengaluru",
+        "country": "India",
+        "postalCode": "560037"
+        }
+    ]
+},
+"systemId": "string",
+"userProperty": {},
+"secretQuestion" : "What is the name of your high school?"
+}
+</code></pre><h2 id='update-a-user'>Update a user</h2>
+<ul>
+<li>Update a target user with given UUID, this method only modifies properties in the request. Returns a <code>404 Not Found</code>
+status if the user does not exist. If not logged in to perform this action, a <code>401 Unauthorized</code> status is returned.</li>
+</ul>
+
+<p>### Attributes</p>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><em>name</em></td>
+<td><code>String</code></td>
+<td>Name of the user</td>
+</tr>
+<tr>
+<td><em>description</em></td>
+<td>`String</td>
+<td>Description of the user</td>
+</tr>
+<tr>
+<td><em>username</em></td>
+<td>`String</td>
+<td>username of the user</td>
+</tr>
+<tr>
+<td><em>password</em></td>
+<td>`String</td>
+<td>password of the user</td>
+</tr>
+<tr>
+<td><em>person</em></td>
+<td><code>String</code></td>
+<td>person resource associated with the user</td>
+</tr>
+<tr>
+<td><em>systemId</em></td>
+<td><code>String</code></td>
+<td>a unique identifier assigned to each user</td>
+</tr>
+<tr>
+<td><em>roles</em></td>
+<td><code>Array[] : role</code></td>
+<td>a list of roles attributed to the user</td>
+</tr>
+<tr>
+<td><em>userProperties</em></td>
+<td><code>JSON Object</code></td>
+<td>A set of key value pairs. Used to store user specific data</td>
+</tr>
+<tr>
+<td><em>secretQuestion</em></td>
+<td><code>String</code></td>
+<td>A secret question chosen by the user</td>
+</tr>
+</tbody></table>
+<pre class="highlight shell_session"><code>POST /user/:target_user_uuid
+{
+  "name": "Mohit Sharma",
+  "description": "An OpenMRS Developer."
+  "username": "batbrain7"
+  "password": "******"
+  "person" :
+        {
+        "names": [
+            {
+                "givenName": "Mohit",
+                "familyName": "Sharma"
+            }
+        ],
+        "gender": "M",
+        "birthdate": "1997-09-02",
+        "addresses": [
+        {
+         "address1": "30, Vivekananda Layout, Munnekolal,Marathahalli",
+        "cityVillage": "Bengaluru",
+        "country": "India",
+        "postalCode": "560037"
+        }
+    ]
+},
+"systemId": "string",
+"userProperty": {},
+"secretQuestion" : "In which year did you graduate"
+}
+</code></pre><h2 id='delete-a-user'>Delete a user</h2>
+<ul>
+<li>Delete or retire a target user by its UUID. Returns a <code>404 Not Found</code> status if the user does not exist.If not logged in to perform this action, a <code>401 Unauthorized</code> status is returned.</li>
+</ul>
+
+<p>### Query Parameters</p>
+
+<p>| Parameter | Type      | Description                                       |
+  | --------- | --------- | ------------------------------------------------- |
+  | <em>purge</em>   | <code>Boolean</code> | The resource will be voided unless purge = ‘true’ |</p>
+<pre class="highlight shell_session"><code>DELETE /user/:target_user_uuid?purge=true
+</code></pre>
