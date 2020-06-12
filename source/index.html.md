@@ -14,6 +14,8 @@ includes:
   # - errors
   - info
   - auth
+  - SystemSettings/system_settings
+  - SystemInformation/system_information
   - User/user
   - User/role
   - Person/persons
@@ -41,6 +43,7 @@ includes:
   - Observations/obs
   - Orders/order
   - Orders/order_type
+  - Forms/Forms
   - contrib
   
 
